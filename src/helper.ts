@@ -33,13 +33,14 @@ export const factoryAddresses: { [chainId in ChainId]: string } = {
   [ChainId.OPTIMISM]: "0xC8481648F5Ff2Fe46027a4E5B49165A55DE106Fd",
 };
 export const rpcUrl: { [chainId in ChainId]: string } = {
-  [ChainId.SEPOLIA]: process.env.SEPOLIA_RPC as string,
-  [ChainId.BSCTESTNET]: process.env.BSC_RPC as string,
-  [ChainId.AMOY]: process.env.AMOY_RPC as string,
-  [ChainId.ARBITRUM]: process.env.ARBITRUM_RPC as string,
-  [ChainId.AVALANCHE]: process.env.AVALANCHE_RPC as string,
-  [ChainId.FANTOM]: process.env.FANTOM_RPC as string,
-  [ChainId.OPTIMISM]: process.env.OPTMISM_RPC as string,
+  [ChainId.SEPOLIA]: "https://ethereum-sepolia-rpc.publicnode.com",
+  [ChainId.BSCTESTNET]: "https://bsc-testnet-rpc.publicnode.com",
+  [ChainId.AMOY]: "https://polygon-amoy-bor-rpc.publicnode.com",
+  [ChainId.ARBITRUM]:
+    "https://endpoints.omniatech.io/v1/arbitrum/sepolia/public",
+  [ChainId.AVALANCHE]: "https://avalanche-fuji-c-chain-rpc.publicnode.com",
+  [ChainId.FANTOM]: "https://fantom-testnet-rpc.publicnode.com",
+  [ChainId.OPTIMISM]: "https://sepolia.optimism.io",
 };
 
 export const CFNCTokenAddress = "0x9BED7e1B07be88894bBf599b50E8189C55b0a888";
