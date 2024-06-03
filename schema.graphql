@@ -1,0 +1,250 @@
+type EventsSummary {
+  id: ID!
+  uniswapV2Factory_AddLiquidityFeeBPChanged: [UniswapV2Factory_AddLiquidityFeeBPChanged!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_AddLiquidityFeeBPChangedCount: BigInt!
+  uniswapV2Factory_FeeReceiverChanged: [UniswapV2Factory_FeeReceiverChanged!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_FeeReceiverChangedCount: BigInt!
+  uniswapV2Factory_PairCreated: [UniswapV2Factory_PairCreated!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_PairCreatedCount: BigInt!
+  Pair: [Pair!]! @derivedFrom(field: "eventsSummary")
+  PairCount: BigInt!
+  uniswapV2Factory_RemoveLiquidityFeeBPChanged: [UniswapV2Factory_RemoveLiquidityFeeBPChanged!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_RemoveLiquidityFeeBPChangedCount: BigInt!
+  uniswapV2Factory_SwapFeeBPChanged: [UniswapV2Factory_SwapFeeBPChanged!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_SwapFeeBPChangedCount: BigInt!
+  uniswapV2Factory_SwapLimitBPChanged: [UniswapV2Factory_SwapLimitBPChanged!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_SwapLimitBPChangedCount: BigInt!
+  uniswapV2Factory_AdminAdded: [UniswapV2Factory_AdminAdded!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_AdminAddedCount: BigInt!
+  uniswapV2Factory_AdminRemoved: [UniswapV2Factory_AdminRemoved!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_AdminRemovedCount: BigInt!
+  uniswapV2Factory_LockStatus: [UniswapV2Factory_LockStatus!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_LockStatusCount: BigInt!
+  uniswapV2Factory_UnlockStatus: [UniswapV2Factory_UnlockStatus!]!
+    @derivedFrom(field: "eventsSummary")
+  uniswapV2Factory_UnlockStatusCount: BigInt!
+}
+type BidelityFactory {
+  id: ID!
+  chainId: Int!
+  address: String!
+
+  swapFeeBP: BigInt!
+  removeLiquidityFeeBP: BigInt!
+  addLiquidityFeeBP: BigInt!
+
+  # pair info
+  pairCount: Int!
+}
+type UniswapV2Factory_AddLiquidityFeeBPChanged {
+  id: ID!
+  timestamp: BigInt!
+  value: BigInt!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_FeeReceiverChanged {
+  id: ID!
+  timestamp: BigInt!
+  feeTo: String!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_PairCreated {
+  id: ID!
+  token0: Token!
+  token1: Token!
+  pair: String!
+  _3: BigInt!
+  eventsSummary: String!
+  chainId: Int!
+}
+
+type Token {
+  # token address
+  id: ID!
+  address: String!
+  chainId: Int!
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+
+  # used for other stats like marketcap
+  # totalSupply: BigInt!
+
+  # # token specific volume
+  # tradeVolume: BigInt!
+  # tradeVolumeUSD: BigInt!
+  # untrackedVolumeUSD: BigInt!
+
+  # # transactions across all pairs
+  txCount: BigInt!
+
+  # # liquidity across all pairs
+  # totalLiquidity: BigInt!
+
+  # # derived prices
+  # derivedETH: BigInt!
+
+  # # derived fields
+  # tokenDayData: [TokenDayData!]! @derivedFrom(field: "token")
+  # pairDayDataBase: [PairDayData!]! @derivedFrom(field: "token0")
+  # pairDayDataQuote: [PairDayData!]! @derivedFrom(field: "token1")
+  # pairBase: [Pair!]! @derivedFrom(field: "token0")
+  # pairQuote: [Pair!]! @derivedFrom(field: "token1")
+}
+
+type UniswapV2Factory_RemoveLiquidityFeeBPChanged {
+  id: ID!
+  timestamp: BigInt!
+  value: BigInt!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_SwapFeeBPChanged {
+  id: ID!
+  timestamp: BigInt!
+  value: BigInt!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_SwapLimitBPChanged {
+  id: ID!
+  timestamp: BigInt!
+  value: BigInt!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_AdminAdded {
+  id: ID!
+  timestamp: BigInt!
+  admin: String!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_AdminRemoved {
+  id: ID!
+  timestamp: BigInt!
+  admin: String!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_LockStatus {
+  id: ID!
+  timestamp: BigInt!
+  pool: String!
+  eventsSummary: String!
+}
+
+type UniswapV2Factory_UnlockStatus {
+  id: ID!
+  timestamp: BigInt!
+  pool: String!
+  eventsSummary: String!
+}
+
+type BdltyTokens {
+  id: ID!
+  chainId: Int!
+  address: String!
+  issued: BigInt!
+  burned: BigInt!
+}
+
+type Pair {
+  # pair address
+  id: ID!
+  chainId: Int!
+  address: String!
+  issued: BigInt!
+  _3: BigInt!
+  eventsSummary: String!
+  # mirrored from the smart contract
+  token0: Token!
+  token1: Token!
+  reserve0: BigInt!
+  reserve1: BigInt!
+  totalSupply: BigInt!
+  burned: BigInt!
+  # derived liquidity
+  # reserveETH: BigInt!
+  # reserveUSD: BigInt!
+  # used for separating per pair reserves and global
+  # trackedReserveETH: BigInt!
+
+  # Price in terms of the asset pair
+  # token0Price: BigInt!
+  # token1Price: BigInt!
+
+  # lifetime volume stats
+  # volumeToken0: BigInt!
+  # volumeToken1: BigInt!
+  # volumeUSD: BigInt!
+  # untrackedVolumeUSD: BigInt!
+  # txCount: BigInt!
+
+  # creation stats
+  # createdAtTimestamp: BigInt!
+  # createdAtBlockNumber: BigInt!
+
+  # Fields used to help derived relationship
+  # liquidityProviderCount: BigInt! # used to detect new exchanges
+  # derived fields
+  # pairHourData: [PairHourData!]! @derivedFrom(field: "pair")
+  # liquidityPositions: [LiquidityPosition!]! @derivedFrom(field: "pair")
+  # liquidityPositionSnapshots: [LiquidityPositionSnapshot!]!
+  # @derivedFrom(field: "pair")
+  # mints: [Mint!]! @derivedFrom(field: "pair")
+  # burns: [Burn!]! @derivedFrom(field: "pair")
+  # swaps: [Swap!]! @derivedFrom(field: "pair")
+  # lock: Boolean
+  # swapsAmount: BigInt!
+  # bidelityProfit: BigInt!
+}
+
+type Transaction {
+  id: ID! # txn hash
+  chainId: Int!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  # This is not the reverse of Mint.transaction; it is only used to
+  # track incomplete mints (similar for burns and swaps)
+  mints: [Mint!]! @derivedFrom(field: "transaction")
+  mintIds: [String!]!
+  # burns: [Burn!]!
+  # swaps: [Swap!]!
+}
+type Mint {
+  # transaction hash + "-" + index in mints Transaction array
+  id: ID!
+  chainId: Int!
+  transaction: Transaction!
+  timestamp: BigInt! # need this to pull recent txns for specific token or pair
+  pair: Pair!
+
+  # populated from the primary Transfer event
+  to: Bytes!
+  liquidity: BigInt!
+
+  # populated from the Mint event
+  sender: Bytes
+  amount0: BigInt
+  amount1: BigInt
+  # logIndex: BigInt
+  # derived amount based on available prices of tokens
+  # amountUSD: BigInt
+
+  # optional fee fields, if a Transfer event is fired in _mintFee
+  # feeTo: Bytes
+  # feeLiquidity: BigInt
+}

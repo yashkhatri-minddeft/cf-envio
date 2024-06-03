@@ -1,0 +1,74 @@
+name: cf-sepolia
+contracts:
+  - name: UniswapV2Factory
+    handler: src/FactoryEventHandlers.ts
+    events:
+      - event: AddLiquidityFeeBPChanged(uint256 timestamp, uint256 value)
+        isAsync: true
+      - event: FeeReceiverChanged(uint256 timestamp, address feeTo)
+      - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256 )
+        isAsync: true
+      - event: RemoveLiquidityFeeBPChanged(uint256 timestamp, uint256 value)
+        isAsync: true
+      - event: SwapFeeBPChanged(uint256 timestamp, uint256 value)
+        isAsync: true
+      - event: SwapLimitBPChanged(uint256 timestamp, uint256 value)
+      - event: adminAdded(uint256 timestamp, address admin)
+      - event: adminRemoved(uint256 timestamp, address admin)
+      - event: lockStatus(uint256 timestamp, address pool)
+      - event: unlockStatus(uint256 timestamp, address pool)
+  - name: BdltyTokens
+    handler: src/BdltyEventHandlers.ts
+    events:
+      - event: Transfer(address indexed from, address indexed to, uint256 value)
+        isAsync: true
+  - name: Pair
+    handler: src/PairEventHandlers.ts
+    abi_file_path: src/abi/pair.abi.json
+    events:
+      - event: Mint(address indexed sender, uint amount0, uint amount1, uint fee)
+        isAsync: true
+      # - event: Swap(address indexed sender, uint amount0In, uint amount1In, uint amount0Out, uint amount1Out, address indexed to, uint fee)
+      #   isAsync: true
+      - event: Transfer(address indexed from, address indexed to, uint256 value)\
+        isAsync: true
+networks:
+  - id: 11155111 # sepolia
+    start_block: 5767264
+    # start_block: 0
+    end_block: null
+    contracts:
+      - name: UniswapV2Factory
+        address:
+          - 0x46e1443bF8F2c1F57dCC093bd29188087D7B71B7
+      - name: BdltyTokens
+        address:
+          - 0x9BED7e1B07be88894bBf599b50E8189C55b0a888
+      - name: Pair
+        address:
+  - id: 80002 # amoy
+    start_block: 6004849
+    # start_block: 0
+    end_block: null
+    contracts:
+      - name: UniswapV2Factory
+        address:
+          - 0xa1749f0f055c6b85e600B1303DF4EBDCB3fc9635
+      - name: BdltyTokens
+        address:
+          - 0x9BED7e1B07be88894bBf599b50E8189C55b0a888
+      - name: Pair
+        address:
+  - id: 421614 # arbitrum
+    start_block: 44574247
+    # start_block: 0
+    end_block: null
+    contracts:
+      - name: UniswapV2Factory
+        address:
+          - 0x448e31F4682eE1bbF36aDF44cC38f7C9d84fd262
+      - name: BdltyTokens
+        address:
+          - 0x9BED7e1B07be88894bBf599b50E8189C55b0a888
+      - name: Pair
+        address:
