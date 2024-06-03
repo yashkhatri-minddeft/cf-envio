@@ -36,8 +36,7 @@ export const rpcUrl: { [chainId in ChainId]: string } = {
   [ChainId.SEPOLIA]: "https://ethereum-sepolia-rpc.publicnode.com",
   [ChainId.BSCTESTNET]: "https://bsc-testnet-rpc.publicnode.com",
   [ChainId.AMOY]: "https://polygon-amoy-bor-rpc.publicnode.com",
-  [ChainId.ARBITRUM]:
-    "https://endpoints.omniatech.io/v1/arbitrum/sepolia/public",
+  [ChainId.ARBITRUM]: "https://sepolia-rollup.arbitrum.io/rpc",
   [ChainId.AVALANCHE]: "https://avalanche-fuji-c-chain-rpc.publicnode.com",
   [ChainId.FANTOM]: "https://fantom-testnet-rpc.publicnode.com",
   [ChainId.OPTIMISM]: "https://sepolia.optimism.io",
