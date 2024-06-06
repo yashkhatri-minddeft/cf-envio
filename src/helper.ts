@@ -1,16 +1,12 @@
 import {
   BdltyTokensContract_TransferEvent_handlerContextAsync,
-  BidelityFactoryEntity,
   PairContract_MintEvent_handlerContextAsync,
   TokenEntity,
-  UniswapV2FactoryContract_PairCreatedEvent_eventArgs,
-  UniswapV2FactoryContract_PairCreatedEvent_handlerContext,
   UniswapV2FactoryContract_PairCreatedEvent_handlerContextAsync,
   bdltyTokensEntity,
   bidelityFactoryEntity,
-  eventLog,
 } from "generated";
-import { Contract, JsonRpcProvider, Wallet } from "ethers";
+import { Contract, JsonRpcProvider, Wallet, ethers } from "ethers";
 import factoryABI from "./abi/factory.abi.json";
 import ERC20ABI from "./abi/erc20.abi.json";
 export enum ChainId {
@@ -32,6 +28,7 @@ export const factoryAddresses: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: "0x448e31F4682eE1bbF36aDF44cC38f7C9d84fd262",
   [ChainId.OPTIMISM]: "0xC8481648F5Ff2Fe46027a4E5B49165A55DE106Fd",
 };
+
 export const rpcUrl: { [chainId in ChainId]: string } = {
   [ChainId.SEPOLIA]: "https://ethereum-sepolia-rpc.publicnode.com",
   [ChainId.BSCTESTNET]: "https://bsc-testnet-rpc.publicnode.com",
@@ -46,12 +43,23 @@ export const CFNCTokenAddress = "0x9BED7e1B07be88894bBf599b50E8189C55b0a888";
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 
+export const ZERO_BI = BigInt(0);
+export const ONE_BI = BigInt(1);
+
+export function toWei(value: bigint) {
+  return ethers.parseEther(value.toString());
+}
+
+export function formatDecimals(value: bigint, decimals: bigint) {
+  return ethers.parseUnits(value.toString(), decimals);
+}
+
 // const initialFactory: bidelityFactoryEntity = {
 //   id: "some",
 //   chainId: 1,
-//   addLiquidityFeeBP: BigInt(0),
-//   removeLiquidityFeeBP: BigInt(0),
-//   swapFeeBP: BigInt(0),
+//   addLiquidityFeeBP: ZER0_BI,
+//   removeLiquidityFeeBP: ZER0_BI,
+//   swapFeeBP: ZER0_BI,
 // };
 export async function loadFactory(
   chainId: ChainId,
@@ -75,12 +83,13 @@ export async function loadFactory(
       swapFeeBP: BigInt(removeLiquidityFeeBP),
       pairCount: 0,
 
-      // addLiquidityFeeBP: BigInt(0),
-      // removeLiquidityFeeBP: BigInt(0),
-      // swapFeeBP: BigInt(0),
+      // addLiquidityFeeBP: ZERO_BI,
+      // removeLiquidityFeeBP: ZERO_BI,
+      // swapFeeBP: ZERO_BI,
     };
     context.BidelityFactory.set(initialFactory);
     factory = initialFactory;
+    context.Bundle.set({ id: "1", ethPrice: ZERO_BI });
   }
   return factory;
   // return context.BidelityFactory;
@@ -96,8 +105,8 @@ export async function loadBdltyToken(
       id: chainId + "-" + CFNCTokenAddress,
       chainId: chainId,
       address: CFNCTokenAddress,
-      issued: BigInt(0),
-      burned: BigInt(0),
+      issued: ZERO_BI,
+      burned: ZERO_BI,
     };
     context.BdltyTokens.set(initialBdlty);
     token = initialBdlty;
@@ -122,7 +131,8 @@ export async function fetchTokenData(
     name,
     chainId,
     address: tokenAddress,
-    txCount: BigInt(0),
+    txCount: ZERO_BI,
+    totalLiquidity: ZERO_BI,
   };
 }
 
@@ -134,5 +144,5 @@ export async function isCompleteMint(
   if (!mint) {
     return false;
   }
-  return mint.sender !== null; // sufficient checks
+  return mint.sender !== undefined; // sufficient checks
 }

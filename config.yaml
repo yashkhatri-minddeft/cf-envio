@@ -28,9 +28,11 @@ contracts:
     events:
       - event: Mint(address indexed sender, uint amount0, uint amount1, uint fee)
         isAsync: true
-      # - event: Swap(address indexed sender, uint amount0In, uint amount1In, uint amount0Out, uint amount1Out, address indexed to, uint fee)
-      #   isAsync: true
+      - event: Swap(address indexed sender, uint amount0In, uint amount1In, uint amount0Out, uint amount1Out, address indexed to, uint fee)
+        isAsync: true
       - event: Transfer(address indexed from, address indexed to, uint256 value)\
+        isAsync: true
+      - event: Sync(uint112 reserve0, uint112 reserve1)
         isAsync: true
 networks:
   - id: 11155111 # sepolia
@@ -72,3 +74,18 @@ networks:
           - 0x9BED7e1B07be88894bBf599b50E8189C55b0a888
       - name: Pair
         address:
+  # - id: 43113 # avalanche
+  #   rpc_config:
+  #     url: https://avalanche-fuji.infura.io/v3/0e5965b9969148259a13088b49a7c492
+  #   start_block: 33254143
+  #   # start_block: 0
+  #   end_block: null
+  #   contracts:
+  #     - name: UniswapV2Factory
+  #       address:
+  #         - 0x4cd93352D611BeDaC1E28c7C68d8BB52E35eA104
+  #     - name: BdltyTokens
+  #       address:
+  #         - 0x9BED7e1B07be88894bBf599b50E8189C55b0a888
+  #     - name: Pair
+  #       address:

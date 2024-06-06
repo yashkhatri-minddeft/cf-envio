@@ -69,6 +69,12 @@ type UniswapV2Factory_PairCreated {
   chainId: Int!
 }
 
+# stores for USD calculations
+type Bundle {
+  id: ID!
+  ethPrice: BigInt! # price of ETH usd
+}
+
 type Token {
   # token address
   id: ID!
@@ -90,8 +96,8 @@ type Token {
   # # transactions across all pairs
   txCount: BigInt!
 
-  # # liquidity across all pairs
-  # totalLiquidity: BigInt!
+  # liquidity across all pairs
+  totalLiquidity: BigInt!
 
   # # derived prices
   # derivedETH: BigInt!
@@ -176,6 +182,8 @@ type Pair {
   reserve1: BigInt!
   totalSupply: BigInt!
   burned: BigInt!
+  token0Price: BigInt!
+  token1Price: BigInt!
   # derived liquidity
   # reserveETH: BigInt!
   # reserveUSD: BigInt!
@@ -220,7 +228,9 @@ type Transaction {
   # This is not the reverse of Mint.transaction; it is only used to
   # track incomplete mints (similar for burns and swaps)
   mints: [Mint!]! @derivedFrom(field: "transaction")
+  swaps: [Swap!]! @derivedFrom(field: "transaction")
   mintIds: [String!]!
+  swapIds: [String!]!
   # burns: [Burn!]!
   # swaps: [Swap!]!
 }
@@ -240,11 +250,39 @@ type Mint {
   sender: Bytes
   amount0: BigInt
   amount1: BigInt
-  # logIndex: BigInt
+  logIndex: BigInt
   # derived amount based on available prices of tokens
   # amountUSD: BigInt
 
   # optional fee fields, if a Transfer event is fired in _mintFee
   # feeTo: Bytes
   # feeLiquidity: BigInt
+}
+
+type Swap {
+  # transaction hash + "-" + index in swaps Transaction array
+  id: ID!
+  chainId: Int!
+  transaction: Transaction!
+  timestamp: BigInt! # need this to pull recent txns for specific token or pair
+  pair: Pair!
+
+  # populated from the Swap event
+  sender: Bytes!
+  from: Bytes! # the EOA that initiated the txn
+  amount0In: BigInt!
+  amount1In: BigInt!
+  amount0Out: BigInt!
+  amount1Out: BigInt!
+  to: Bytes!
+  logIndex: BigInt
+
+  token0Price: BigInt!
+  token1Price: BigInt!
+
+  # derived info
+  # amountUSD: BigInt!
+
+  hash: String!
+  fee: BigInt!
 }

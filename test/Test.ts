@@ -7,19 +7,21 @@ import {
 const { MockDb, UniswapV2Factory, Addresses } = TestHelpers;
 
 import { GLOBAL_EVENTS_SUMMARY_KEY } from "../src/FactoryEventHandlers";
+import { ONE_BI, ZERO_BI } from "../src/helper";
 
 const MOCK_EVENTS_SUMMARY_ENTITY: EventsSummaryEntity = {
   id: GLOBAL_EVENTS_SUMMARY_KEY,
-  uniswapV2Factory_AddLiquidityFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_FeeReceiverChangedCount: BigInt(0),
-  uniswapV2Factory_PairCreatedCount: BigInt(0),
-  uniswapV2Factory_RemoveLiquidityFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_SwapFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_SwapLimitBPChangedCount: BigInt(0),
-  uniswapV2Factory_AdminAddedCount: BigInt(0),
-  uniswapV2Factory_AdminRemovedCount: BigInt(0),
-  uniswapV2Factory_LockStatusCount: BigInt(0),
-  uniswapV2Factory_UnlockStatusCount: BigInt(0),
+  uniswapV2Factory_AddLiquidityFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_FeeReceiverChangedCount: ZERO_BI,
+  uniswapV2Factory_PairCreatedCount: ZERO_BI,
+  uniswapV2Factory_RemoveLiquidityFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_SwapFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_SwapLimitBPChangedCount: ZERO_BI,
+  uniswapV2Factory_AdminAddedCount: ZERO_BI,
+  uniswapV2Factory_AdminRemovedCount: ZERO_BI,
+  uniswapV2Factory_LockStatusCount: ZERO_BI,
+  uniswapV2Factory_UnlockStatusCount: ZERO_BI,
+  pairCount: ZERO_BI,
 };
 
 describe("UniswapV2Factory contract AddLiquidityFeeBPChanged event tests", () => {
@@ -94,7 +96,7 @@ describe("UniswapV2Factory contract AddLiquidityFeeBPChanged event tests", () =>
       ...MOCK_EVENTS_SUMMARY_ENTITY,
       uniswapV2Factory_AddLiquidityFeeBPChangedCount:
         MOCK_EVENTS_SUMMARY_ENTITY.uniswapV2Factory_AddLiquidityFeeBPChangedCount +
-        BigInt(1),
+        ONE_BI,
     };
     // Asserting that the entity in the mock database is the same as the expected entity
     assert.deepEqual(

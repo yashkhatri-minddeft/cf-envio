@@ -22,6 +22,8 @@ import {
 import {
   ADDRESS_ZERO,
   ChainId,
+  ONE_BI,
+  ZERO_BI,
   factoryAddresses,
   fetchTokenData,
   loadBdltyToken,
@@ -32,17 +34,17 @@ export const GLOBAL_EVENTS_SUMMARY_KEY = "GlobalEventsSummary";
 
 const INITIAL_EVENTS_SUMMARY: EventsSummaryEntity = {
   id: GLOBAL_EVENTS_SUMMARY_KEY,
-  uniswapV2Factory_AddLiquidityFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_FeeReceiverChangedCount: BigInt(0),
-  uniswapV2Factory_PairCreatedCount: BigInt(0),
-  uniswapV2Factory_RemoveLiquidityFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_SwapFeeBPChangedCount: BigInt(0),
-  uniswapV2Factory_SwapLimitBPChangedCount: BigInt(0),
-  uniswapV2Factory_AdminAddedCount: BigInt(0),
-  uniswapV2Factory_AdminRemovedCount: BigInt(0),
-  uniswapV2Factory_LockStatusCount: BigInt(0),
-  uniswapV2Factory_UnlockStatusCount: BigInt(0),
-  pairCount: BigInt(0),
+  uniswapV2Factory_AddLiquidityFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_FeeReceiverChangedCount: ZERO_BI,
+  uniswapV2Factory_PairCreatedCount: ZERO_BI,
+  uniswapV2Factory_RemoveLiquidityFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_SwapFeeBPChangedCount: ZERO_BI,
+  uniswapV2Factory_SwapLimitBPChangedCount: ZERO_BI,
+  uniswapV2Factory_AdminAddedCount: ZERO_BI,
+  uniswapV2Factory_AdminRemovedCount: ZERO_BI,
+  uniswapV2Factory_LockStatusCount: ZERO_BI,
+  uniswapV2Factory_UnlockStatusCount: ZERO_BI,
+  pairCount: ZERO_BI,
 };
 
 UniswapV2FactoryContract.AddLiquidityFeeBPChanged.loader(
@@ -68,7 +70,7 @@ UniswapV2FactoryContract.AddLiquidityFeeBPChanged.handlerAsync(
       ...currentSummaryEntity,
       uniswapV2Factory_AddLiquidityFeeBPChangedCount:
         currentSummaryEntity.uniswapV2Factory_AddLiquidityFeeBPChangedCount +
-        BigInt(1),
+        ONE_BI,
     };
 
     const uniswapV2Factory_AddLiquidityFeeBPChangedEntity: UniswapV2Factory_AddLiquidityFeeBPChangedEntity =
@@ -98,7 +100,7 @@ UniswapV2FactoryContract.FeeReceiverChanged.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_FeeReceiverChangedCount:
-      currentSummaryEntity.uniswapV2Factory_FeeReceiverChangedCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_FeeReceiverChangedCount + ONE_BI,
   };
 
   const uniswapV2Factory_FeeReceiverChangedEntity: UniswapV2Factory_FeeReceiverChangedEntity =
@@ -138,8 +140,8 @@ UniswapV2FactoryContract.PairCreated.handlerAsync(
     const nextSummaryEntity = {
       ...currentSummaryEntity,
       uniswapV2Factory_PairCreatedCount:
-        currentSummaryEntity.uniswapV2Factory_PairCreatedCount + BigInt(1),
-      pairCount: currentSummaryEntity.pairCount + BigInt(1),
+        currentSummaryEntity.uniswapV2Factory_PairCreatedCount + ONE_BI,
+      pairCount: currentSummaryEntity.pairCount + ONE_BI,
     };
     let token0 = await context.Token.get(
       event.chainId + "-" + event.params.token0
@@ -180,13 +182,15 @@ UniswapV2FactoryContract.PairCreated.handlerAsync(
       address: event.params.pair,
       token0_id: token0.id,
       token1_id: token1.id,
-      burned: BigInt(0),
-      issued: BigInt(0),
-      reserve0: BigInt(0),
-      reserve1: BigInt(0),
-      totalSupply: BigInt(0),
+      burned: ZERO_BI,
+      issued: ZERO_BI,
+      reserve0: ZERO_BI,
+      reserve1: ZERO_BI,
+      totalSupply: ZERO_BI,
       _3: event.params._3,
       eventsSummary: GLOBAL_EVENTS_SUMMARY_KEY,
+      token0Price: ZERO_BI,
+      token1Price: ZERO_BI,
     });
   }
 );
@@ -213,7 +217,7 @@ UniswapV2FactoryContract.RemoveLiquidityFeeBPChanged.handlerAsync(
       ...currentSummaryEntity,
       uniswapV2Factory_RemoveLiquidityFeeBPChangedCount:
         currentSummaryEntity.uniswapV2Factory_RemoveLiquidityFeeBPChangedCount +
-        BigInt(1),
+        ONE_BI,
     };
 
     const uniswapV2Factory_RemoveLiquidityFeeBPChangedEntity: UniswapV2Factory_RemoveLiquidityFeeBPChangedEntity =
@@ -250,7 +254,7 @@ UniswapV2FactoryContract.SwapFeeBPChanged.handlerAsync(
     const nextSummaryEntity = {
       ...currentSummaryEntity,
       uniswapV2Factory_SwapFeeBPChangedCount:
-        currentSummaryEntity.uniswapV2Factory_SwapFeeBPChangedCount + BigInt(1),
+        currentSummaryEntity.uniswapV2Factory_SwapFeeBPChangedCount + ONE_BI,
     };
 
     const uniswapV2Factory_SwapFeeBPChangedEntity: UniswapV2Factory_SwapFeeBPChangedEntity =
@@ -280,7 +284,7 @@ UniswapV2FactoryContract.SwapLimitBPChanged.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_SwapLimitBPChangedCount:
-      currentSummaryEntity.uniswapV2Factory_SwapLimitBPChangedCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_SwapLimitBPChangedCount + ONE_BI,
   };
 
   const uniswapV2Factory_SwapLimitBPChangedEntity: UniswapV2Factory_SwapLimitBPChangedEntity =
@@ -309,7 +313,7 @@ UniswapV2FactoryContract.AdminAdded.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_AdminAddedCount:
-      currentSummaryEntity.uniswapV2Factory_AdminAddedCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_AdminAddedCount + ONE_BI,
   };
 
   const uniswapV2Factory_AdminAddedEntity: UniswapV2Factory_AdminAddedEntity = {
@@ -335,7 +339,7 @@ UniswapV2FactoryContract.AdminRemoved.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_AdminRemovedCount:
-      currentSummaryEntity.uniswapV2Factory_AdminRemovedCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_AdminRemovedCount + ONE_BI,
   };
 
   const uniswapV2Factory_AdminRemovedEntity: UniswapV2Factory_AdminRemovedEntity =
@@ -364,7 +368,7 @@ UniswapV2FactoryContract.LockStatus.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_LockStatusCount:
-      currentSummaryEntity.uniswapV2Factory_LockStatusCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_LockStatusCount + ONE_BI,
   };
 
   const uniswapV2Factory_LockStatusEntity: UniswapV2Factory_LockStatusEntity = {
@@ -390,7 +394,7 @@ UniswapV2FactoryContract.UnlockStatus.handler(({ event, context }) => {
   const nextSummaryEntity = {
     ...currentSummaryEntity,
     uniswapV2Factory_UnlockStatusCount:
-      currentSummaryEntity.uniswapV2Factory_UnlockStatusCount + BigInt(1),
+      currentSummaryEntity.uniswapV2Factory_UnlockStatusCount + ONE_BI,
   };
 
   const uniswapV2Factory_UnlockStatusEntity: UniswapV2Factory_UnlockStatusEntity =
